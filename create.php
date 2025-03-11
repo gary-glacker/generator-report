@@ -98,9 +98,9 @@
     </style>
 </head>
 <body>
-    <div class="form">
+    <div class="form" style="hidden">
         <fieldset>
-            <legend>Student Form</legend>
+            <legend>Student Form in Primary</legend>
             <form action="" method="POST">
                 <label>Username: </label>
                 <input type="text" name="name" required><br><br>

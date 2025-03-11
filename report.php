@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Report</title>
     <link rel="stylesheet" href="style.css"> <!-- External CSS file -->
+    <!-- Include html2pdf library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         /* Internal CSS for animations and additional styling */
         @keyframes fadeIn {
@@ -63,6 +65,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            margin: 5px;
         }
 
         button:hover {
@@ -86,7 +89,9 @@
     <div class="container">
         <div class="report">
             <!-- Go Back Button -->
-            <button><a href="index.php">Go Back</a></button>
+            <button><a href="index.php">Home</a></button>
+            <!-- Download PDF Button -->
+            <button id="downloadPdf">Download PDF</button>
 
             <?php
             // Database connection
@@ -131,6 +136,7 @@
             // Display selected student's details
             while ($row = mysqli_fetch_assoc($query)) {
                 $position = $ranks[$row['id']] ?? "N/A"; // Get position from ranks array
+                $name = $row['name']; // get name from database and used in variable
             ?>
                 <table>
                     <tr>
@@ -182,5 +188,22 @@
             <?php } ?>
         </div>
     </div>
+
+    <script>
+        // JavaScript to generate and download PDF
+        document.getElementById('downloadPdf').addEventListener('click', function () {
+            const element = document.querySelector('.report'); // Capture the report content
+            const options = {
+                margin: [10, 10],
+                filename: '<?php echo $name?>.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Generate and download PDF
+            html2pdf().from(element).set(options).save();
+        });
+    </script>
 </body>
 </html>

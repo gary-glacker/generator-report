@@ -13,6 +13,7 @@ if(isset($_GET['remove_data'])){
     if($check_result){
         ?>
           <script>
+            confirm('Are you sure You want to delete');
             window.location.href = 'index.php';
           </script>
         <?php
